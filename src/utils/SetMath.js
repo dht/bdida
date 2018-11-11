@@ -157,7 +157,7 @@ export class SetMath {
 
         term = term.replace(/ /g, "");
 
-        let regex = new RegExp(/([RI]-?\d*)([\^\*U])?/gim);
+        let regex = new RegExp(/([ZRI]-?\d*)([\^\*U])?/gim);
 
         let matches, operation, result;
 
