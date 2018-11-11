@@ -198,6 +198,11 @@ export class SetMath {
         return output;
     }
 
+    refreshQualities(data) {
+        data.qualities = this.checkQualities(data.relation);
+        return data;
+    }
+
     whoWith(data, n) {
         const { relation } = data;
 

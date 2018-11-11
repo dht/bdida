@@ -45,7 +45,6 @@ class App extends Component {
 
     loadPermutation(permutationId) {
         const { data1 } = this.state;
-
         const p = permutations[`p${permutationId}`] || permutations.p1;
 
         if (!p) return;
@@ -62,6 +61,7 @@ class App extends Component {
             () => {
                 this.resetScale();
                 this.runFormula(formula);
+                this.refreshQualities();
             }
         );
     }
@@ -147,6 +147,7 @@ class App extends Component {
     refresh = () => {
         // this.checkLayer();
         this.calculate();
+        this.refreshQualities();
     };
 
     onClick = (row, col, which = 1) => {
@@ -159,14 +160,17 @@ class App extends Component {
 
         data = m.addBlock(data, row, col);
 
-        this.setState({ [`data${which}`]: data });
-        this.refresh();
+        this.setState({ [`data${which}`]: data }, () => {
+            this.refresh();
+        });
     };
 
-    checkQualities = relation => {
+    refreshQualities = () => {
         const m = this.m;
+        let { data1 } = this.state;
 
-        return m.checkQualities(relation);
+        data1 = m.refreshQualities(data1);
+        this.setState({ data1 });
     };
 
     runFormula = () => {
@@ -177,8 +181,9 @@ class App extends Component {
 
         data1 = m.runFormula(formula, data1);
 
-        this.setState({ data1 });
-        this.refresh();
+        this.setState({ data1 }, () => {
+            this.refresh();
+        });
     };
 
     onSelect = selectedFormula => {
