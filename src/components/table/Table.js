@@ -76,14 +76,23 @@ export class Table<props> extends Component {
     renderQualities() {
         const { data } = this.props;
         const { qualities } = data || {};
-        const { reflexive, symmetric, transitive } = qualities || {};
+        const { reflexive, symmetric, antiSymmetric, transitive } =
+            qualities || {};
 
         return (
-            <div className="qualities">
-                <Tag on={reflexive}>רפלקסיבי</Tag>
-                <Tag on={symmetric}>סימטרי</Tag>
-                {/* <Tag on="true">אנטי-סימטרי</Tag> */}
-                <Tag on={transitive}>טרנזיטיבי</Tag>
+            <div>
+                <div className="qualities">
+                    <Tag on={reflexive}>רפלקסיבי</Tag>
+                    <Tag on={symmetric}>סימטרי</Tag>
+                    <Tag on={transitive}>טרנזיטיבי</Tag>
+                </div>
+                <div className="qualities">
+                    <Tag on={antiSymmetric}>אנטי-סימטרי</Tag>
+                    <Tag on={reflexive && symmetric && transitive}>שקילות</Tag>
+                    <Tag on={reflexive && antiSymmetric && transitive}>
+                        סדר חלקי
+                    </Tag>
+                </div>
             </div>
         );
     }

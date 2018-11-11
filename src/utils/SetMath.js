@@ -309,7 +309,8 @@ export class SetMath {
 
         let reflexive = true,
             symmetric = true,
-            transitive = true;
+            transitive = true,
+            antiSymmetric = true;
 
         // reflexive
         for (let i = 1; i <= this.boardSize; i++) {
@@ -317,6 +318,14 @@ export class SetMath {
                 .length;
             reflexive = reflexive && exists;
         }
+
+        // antiSymmetric
+        relation.forEach(rel => {
+            const exists = relation.filter(
+                r => r[0] === rel[1] && r[1] === rel[0] && r[0] !== r[1]
+            ).length;
+            antiSymmetric = antiSymmetric && !exists;
+        });
 
         // symmetric
         relation.forEach(rel => {
@@ -341,6 +350,7 @@ export class SetMath {
         return {
             reflexive,
             symmetric,
+            antiSymmetric,
             transitive
         };
 

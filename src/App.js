@@ -23,6 +23,7 @@ class App extends Component {
             qualities: {
                 reflexive: true,
                 symmetric: true,
+                antiSymmetric: true,
                 transitive: true
             }
         },
@@ -33,6 +34,7 @@ class App extends Component {
             qualities: {
                 reflexive: true,
                 symmetric: true,
+                antiSymmetric: true,
                 transitive: true
             }
         },
@@ -50,9 +52,12 @@ class App extends Component {
 
         data1.relation = initialRelation || [];
 
-        this.setState({ input, boardSize, data1 }, () => {
-            this.reset();
-        });
+        this.setState(
+            { input, boardSize, boardSizeTransient: boardSize, data1 },
+            () => {
+                this.reset();
+            }
+        );
     }
 
     componentWillReceiveProps(props) {

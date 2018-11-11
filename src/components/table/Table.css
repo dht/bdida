@@ -16,7 +16,9 @@
     padding: 20px;
     direction: rtl; }
     .Table-container .bottom .qualities {
-      display: flex; }
+      display: flex;
+      align-items: center;
+      justify-content: center; }
   .Table-container .table {
     border: 1px solid #333;
     border-left: 0;
