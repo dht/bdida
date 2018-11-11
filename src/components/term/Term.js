@@ -10,18 +10,26 @@ export class Term<props> extends Component {
 
     state = {};
 
+    onChange = value => {
+        this.props.onChange(value);
+    };
+
+    reset = () => {
+        this.onChange("R");
+    };
+
     render() {
-        const { input } = this.state;
+        const { value } = this.props;
 
         return (
             <div className="Term-container">
                 <div>
                     <input
                         placeholder="חישוב"
-                        value={input}
-                        onChange={this.calculate}
+                        value={value}
+                        onChange={ev => this.onChange(ev.target.value)}
                     />
-                    <a>איפוס</a>
+                    <a onClick={this.reset}>איפוס</a>
                 </div>
             </div>
         );

@@ -8,10 +8,11 @@ const names = {
     7: "שבע",
     8: "שמונה",
     9: "תשע",
-    10: "עשר",
-}
+    10: "עשר"
+};
 
-const isPrime = (a) =>  [ ...Array(20).keys() ].filter(i => a % i === 0).length === 2;
+const isPrime = a =>
+    [...Array(20).keys()].filter(i => a % i === 0).length === 2;
 
 export const formulas = [
     {
@@ -51,25 +52,29 @@ export const formulas = [
     },
     {
         id: 7,
-        title:"הסכום הוא ראשוני",
+        title: "הסכום הוא ראשוני",
         formula: (a, b) => isPrime(a + b)
     },
     {
         id: 8,
-        title:"הפרש גדול מ-2",
+        title: "הפרש גדול מ-2",
         formula: (a, b) => Math.abs(a - b) > 2
     },
     {
         id: 9,
-        title:"זה בחזקת זה גדול מ- 100",
+        title: "זה בחזקת זה גדול מ- 100",
         formula: (a, b) => Math.pow(a, b) > 100
     },
     {
         id: 10,
-        title:"מכפלה גדולה מ- 10",
+        title: "מכפלה גדולה מ- 10",
         formula: (a, b) => a * b > 10
+    },
+    {
+        id: 11,
+        title: "העוקב",
+        formula: (a, b) => a - 1 === b
     }
-
-]
+];
 
 export default formulas;
