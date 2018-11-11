@@ -31,6 +31,30 @@ export class Table<props> extends Component {
         return className;
     };
 
+    mouseDown = ev => {
+        this.down = true;
+    };
+
+    mouseUp = ev => {
+        this.down = false;
+    };
+
+    onMouseOver = (row, col) => {
+        if (this.down) {
+            this.props.onClick(row, col);
+        }
+    };
+
+    componentDidMount() {
+        document.addEventListener("mousedown", this.mouseDown);
+        document.addEventListener("mouseup", this.mouseUp);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("mousedown", this.mouseDown);
+        document.removeEventListener("mouseup", this.mouseUp);
+    }
+
     renderCells(row) {
         const { data } = this.props,
             { group } = data;
@@ -39,7 +63,8 @@ export class Table<props> extends Component {
             <div
                 key={col}
                 className={this.className(row, col)}
-                onClick={() => this.props.onClick(row, col)}
+                onMouseOver={() => this.onMouseOver(row, col)}
+                onMouseDown={() => this.props.onClick(row, col)}
             />
         ));
     }

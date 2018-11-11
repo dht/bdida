@@ -5,7 +5,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0; }
+  margin: 0;
+  user-select: none; }
   .Table-container .top {
     padding: 20px;
     direction: rtl;
@@ -41,8 +42,6 @@
     justify-content: center; }
   .Table-container .td {
     cursor: pointer; }
-  .Table-container .td:hover {
-    background-color: #eee; }
   .Table-container .td.selected {
     background-color: #eee; }
   .Table-container .td.layer::before {
