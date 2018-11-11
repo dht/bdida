@@ -163,15 +163,24 @@ class App extends Component {
         return m.checkQualities(relation);
     };
 
-    onSelect = selectedFormula => {
+    runFormula = () => {
         const m = this.m;
-        let { data1 } = this.state;
+        let { data1, formula } = this.state;
+
+        if (!formula) return;
+
+        data1 = m.runFormula(formula, data1);
+
+        this.setState({ data1 });
+        this.refresh();
+    };
+
+    onSelect = selectedFormula => {
         const { formula } = selectedFormula;
 
-        data1 = m.runFormula(selectedFormula, data1);
-
-        this.setState({ data1, formula });
-        this.refresh();
+        this.setState({ formula }, () => {
+            this.runFormula();
+        });
     };
 
     onSizeChange = size => {
@@ -186,6 +195,7 @@ class App extends Component {
 
         this.setState({ boardSizeTransient: size, boardSize }, () => {
             this.reset();
+            this.runFormula();
         });
     };
 

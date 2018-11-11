@@ -22,7 +22,7 @@ export const p9 = {
 };
 
 export const p10 = {
-    input: "R2",
+    input: "S2",
     boardSize: 5,
     initialRelation: [
         [1, 2],
@@ -43,7 +43,7 @@ export const p11 = {
 };
 
 export const p12 = {
-    input: "R5",
+    input: "S5",
     boardSize: 5,
     initialRelation: [
         [1, 2],
@@ -70,7 +70,7 @@ export const p14 = {
 };
 
 export const p15 = {
-    input: "R U R2 U R3 U R4",
+    input: "S U S2 U S3 U S4",
     boardSize: 5,
     initialRelation: [
         [1, 2],

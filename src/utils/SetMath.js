@@ -157,7 +157,7 @@ export class SetMath {
 
         term = term.replace(/ /g, "");
 
-        let regex = new RegExp(/([ZRI]-?\d*)([\^\*U])?/gim);
+        let regex = new RegExp(/([ZRIS]-?\d*)([\^\*U])?/gim);
 
         let matches, operation, result;
 
@@ -409,13 +409,11 @@ export class SetMath {
         return data;
     }
 
-    runFormula(selectedFormula, data) {
+    runFormula(formula, data) {
         let relation = [],
             qualities;
 
         console.time("runFormula");
-
-        const { formula } = selectedFormula;
 
         for (let a = 1; a <= this.boardSize; a++) {
             for (let b = 1; b <= this.boardSize; b++) {
