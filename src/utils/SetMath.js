@@ -1,5 +1,7 @@
 import clone from "clone";
 
+let timer_q = 1;
+
 export class SetMath {
     constructor(boardSize) {
         this.boardSize = boardSize;
@@ -20,17 +22,25 @@ export class SetMath {
             });
         });
 
-        return output;
+        const after = this.removeDuplicates(output);
+
+        return after;
     }
 
     power(relation, pow) {
         let output = clone(relation);
 
-        if (pow > 10) {
-            pow = 10;
+        if (pow > 1000) {
+            pow = 1000;
+        }
+
+        if (pow === 0) {
+            return [];
         }
 
         if (pow < 0) {
+            pow = Math.abs(pow);
+            relation = this.flip(relation);
             output = this.flip(output);
         }
 
@@ -54,14 +64,13 @@ export class SetMath {
     calculateOne(one, relation) {
         one = one.trim();
         const prefix = one.substr(0, 1).toUpperCase(),
-            pow = parseInt(one.substr(1), 10) || 1;
+            pow = parseInt(one.substr(1), 10) || 0;
 
         let rel;
 
         switch (prefix) {
             case "I":
-                rel = this.i();
-                break;
+                return this.i();
             default:
                 rel = relation;
         }
@@ -85,7 +94,9 @@ export class SetMath {
     }
 
     and(rel1 = [], rel2 = []) {
-        return rel1.filter(i => this.exists(rel2, i));
+        const after = rel1.filter(i => this.exists(rel2, i));
+        console.log("after ->", after);
+        return after;
     }
 
     or(rel1, rel2) {
@@ -93,42 +104,92 @@ export class SetMath {
         return [...rel1, ...temp];
     }
 
+    removeDuplicates(rel) {
+        let temp = {};
+
+        rel.forEach(pair => {
+            const from = pair[0],
+                to = pair[1];
+
+            temp[from] = temp[from] || [];
+
+            if (temp[from].indexOf(to) < 0) {
+                temp[from].push(to);
+            }
+        });
+
+        return Object.keys(temp).reduce((output, from) => {
+            const arr = temp[from];
+
+            arr.forEach(to => {
+                output.push([parseInt(from, 10), to]);
+            });
+
+            return output;
+        }, []);
+    }
+
     operation(rel1, rel2, which) {
+        let result;
+
         switch (which) {
             case "^":
-                return this.and(rel1, rel2);
+                result = this.and(rel1, rel2);
+                break;
             case "U":
-                return this.or(rel1, rel2);
+                result = this.or(rel1, rel2);
+                break;
             case "*":
-                return this.multi(rel1, rel2);
+                result = this.multi(rel1, rel2);
+                break;
         }
+
+        return this.removeDuplicates(result);
     }
 
     calculate(data, term) {
         let output = clone(data);
         let { relation } = output;
 
+        console.time("calculation");
+
         term = term.replace(/ /g, "");
 
-        let regex = new RegExp(/([RI]-?\d?)([\^\*U])?/gim);
+        let regex = new RegExp(/([RI]-?\d*)([\^\*U])?/gim);
 
         let matches, operation, result;
 
+        let i = 0;
+
         while ((matches = regex.exec(term))) {
+            i++;
+
             if (matches.length === 3) {
+                console.time(`operation ${i}`);
+
                 const vr = matches[1];
+
                 const transient = this.calculateOne(vr, relation);
                 result = result || transient;
 
                 if (operation) {
+                    console.log("result ->", result);
                     result = this.operation(result, transient, operation);
+                    console.log("result ->", result);
                 }
 
                 operation = matches[2];
+
+                console.timeEnd(`operation ${i}`);
             }
         }
 
-        output.relation = this.trim(result);
+        console.timeEnd("calculation");
+
+        console.log("result ->", result);
+
+        result = this.trim(result);
+        output.relation = result;
         output.qualities = this.checkQualities(result);
 
         return output;
@@ -187,6 +248,8 @@ export class SetMath {
     checkLayer(data) {
         let { relation } = data;
 
+        console.time("checkLayer");
+
         let temp = [...relation];
         let layer = [];
 
@@ -214,6 +277,8 @@ export class SetMath {
 
         data.layer = layer;
 
+        console.timeEnd("checkLayer");
+
         return data;
     }
 
@@ -237,6 +302,9 @@ export class SetMath {
     }
 
     checkQualities(relation) {
+        timer_q++;
+        console.time(`checkQualities ${timer_q}`);
+
         let reflexive = true,
             symmetric = true,
             transitive = true;
@@ -273,6 +341,8 @@ export class SetMath {
             symmetric,
             transitive
         };
+
+        console.timeEnd(`checkQualities ${timer_q}`);
     }
 
     reset(data) {
@@ -331,6 +401,8 @@ export class SetMath {
         let relation = [],
             qualities;
 
+        console.time("runFormula");
+
         const { formula } = selectedFormula;
 
         for (let a = 1; a <= this.boardSize; a++) {
@@ -343,6 +415,8 @@ export class SetMath {
 
         data.relation = relation;
         data.qualities = this.checkQualities(relation);
+
+        console.timeEnd("runFormula");
 
         return data;
     }

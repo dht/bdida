@@ -4,18 +4,21 @@ import "./App.css";
 import Table from "./components/table/Table";
 import Formulas from "./components/formulas/Formulas";
 import formulas from "./constants/formulas";
+import * as permutations from "./constants/permutations";
 import Tag from "./components/tag/Tag";
 import Term from "./components/term/Term";
 import { SetMath } from "./utils/SetMath";
 
+const p = permutations.p1;
+
 class App extends Component {
     state = {
         input: "I U R U R2 U R3 U R4",
-        boardSize: 10,
-        boardSizeTransient: 10,
+        boardSize: p.boardSize,
+        boardSizeTransient: p.boardSize,
         data1: {
-            group: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-            relation: [],
+            group: [],
+            relation: p.initialRelation || [],
             layer: [],
             qualities: {
                 reflexive: true,
@@ -24,7 +27,7 @@ class App extends Component {
             }
         },
         data2: {
-            group: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            group: [],
             relation: [],
             layer: [],
             qualities: {
@@ -36,8 +39,37 @@ class App extends Component {
         selectedFormula: {}
     };
 
+    loadPermutation(permutationId) {
+        const { data1 } = this.state;
+
+        const p = permutations[`p${permutationId}`] || permutations.p1;
+
+        if (!p) return;
+
+        const { input, boardSize, initialRelation } = p;
+
+        data1.relation = initialRelation || [];
+
+        this.setState({ input, boardSize, data1 }, () => {
+            this.reset();
+        });
+    }
+
+    componentWillReceiveProps(props) {
+        const { permutationId } = props;
+
+        if (this.state.permutationId !== permutationId) {
+            this.setState({ permutationId });
+            this.loadPermutation(permutationId);
+        }
+    }
+
     componentDidMount() {
-        this.reset();
+        const { match } = this.props,
+            { params } = match,
+            { permutationId } = params;
+
+        this.loadPermutation(permutationId);
     }
 
     reset = () => {
@@ -102,7 +134,7 @@ class App extends Component {
     };
 
     refresh = () => {
-        this.checkLayer();
+        // this.checkLayer();
         this.calculate();
     };
 
