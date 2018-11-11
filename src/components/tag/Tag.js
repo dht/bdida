@@ -6,8 +6,7 @@ import PropTypes from "prop-types";
 type props = {};
 
 export class Tag<props> extends Component {
-    static defaultProps: props = {
-    };
+    static defaultProps: props = {};
 
     state = {};
 
@@ -18,11 +17,7 @@ export class Tag<props> extends Component {
             className += " on";
         }
 
-        return (
-            <div className={className}>
-                 {this.props.children}
-            </div>
-        );
+        return <div className={className}>{this.props.children}</div>;
     }
 }
 

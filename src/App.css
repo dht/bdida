@@ -1,24 +1,28 @@
-.line {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 30px; }
-
-button {
-  background-color: white;
-  color: #333;
-  border: 1px solid #333;
-  border-radius: 5px;
-  padding: 5px 10px;
-  font-size: 16px;
-  margin: 5px; }
-
-button:hover {
-  background-color: #eee;
-  cursor: pointer; }
-
-button:disabled {
-  border: 1px solid #bbb;
-  color: #bbb;
-  cursor: default;
-  background-color: white; }
+.App {
+  direction: rtl; }
+  .App h1 {
+    font-size: 18px;
+    direction: ltr; }
+  .App .line {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 1100px;
+    margin: auto; }
+  .App button {
+    background-color: white;
+    color: #333;
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding: 4px 10px;
+    font-size: 14px;
+    margin: 5px;
+    align-self: flex-start; }
+  .App button:hover {
+    background-color: #eee;
+    cursor: pointer; }
+  .App button:disabled {
+    border: 1px solid #bbb;
+    color: #bbb;
+    cursor: default;
+    background-color: white; }

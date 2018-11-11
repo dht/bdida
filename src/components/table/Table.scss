@@ -1,8 +1,35 @@
 .Table-container {
-    border:1px solid #333;
-    border-left:0;
-    border-bottom:0;
-}
+    direction: ltr;
+    width: 400px;
+    border-right: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin:0;
+    
+    .top {
+        padding:20px;
+        direction: rtl;
+        min-height: 45px;
+        display: flex;
+        align-items: center;
+    }
+
+    .bottom {
+        padding:20px;
+        direction: rtl;
+
+        .qualities {
+            display: flex;
+        }
+    }
+
+    .table {
+        border:1px solid #333;
+        border-left:0;
+        border-bottom:0;
+    }
+
 
 .header {
     display:flex;
@@ -15,9 +42,9 @@
 }
 
 .td, .th {
-    width:50px;
-    height:50px;
-    font-size:25px;
+    width:30px;
+    height:30px;
+    font-size:20px;
     border:1px solid #333;
     border-top:1px solid white;
     border-right:1px solid white;
@@ -39,5 +66,6 @@
 }
 
 .td.layer::before {
-    content: "x"
+    content: ""
+}
 }

@@ -1,2 +1,13 @@
+
 .Tag-container {
+    background-color: #eee;
+    color: #333;
+    padding: 3px 10px;
+    border-radius: 5px;
+    margin: 5px 10px;
+    text-align: center;
+
+    &.on {
+        background-color: #adff2f;
+    }
 }
