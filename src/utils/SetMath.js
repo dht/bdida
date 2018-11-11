@@ -64,11 +64,13 @@ export class SetMath {
     calculateOne(one, relation) {
         one = one.trim();
         const prefix = one.substr(0, 1).toUpperCase(),
-            pow = parseInt(one.substr(1), 10) || 0;
+            pow = parseInt(one.substr(1), 10) || 1;
 
         let rel;
 
         switch (prefix) {
+            case "Z":
+                return [];
             case "I":
                 return this.i();
             default:
