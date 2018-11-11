@@ -41,17 +41,19 @@ export class Formulas<props> extends Component {
                 </ul>
 
                 <button
-                    onClick={this.props.complete}
-                    disabled={reflexive && symmetric && transitive}
-                >
-                    השלם לשקילות
-                </button>
-                <button onClick={this.props.reset}>אפס מיון</button>
-                <button
                     onClick={this.props.sort}
                     disabled={!reflexive || !symmetric || !transitive}
                 >
                     מיין לפי קבוצות שקילות
+                </button>
+
+                <button onClick={this.props.reset}>אפס מיון</button>
+
+                <button
+                    onClick={this.props.complete}
+                    disabled={reflexive && symmetric && transitive}
+                >
+                    השלם לשקילות
                 </button>
             </div>
         );
