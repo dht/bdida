@@ -19,6 +19,7 @@ class App extends Component {
         data1: {
             group: [],
             relation: p.initialRelation || [],
+            scale: i => i + 1,
             layer: [],
             qualities: {
                 reflexive: true,
@@ -30,6 +31,7 @@ class App extends Component {
         data2: {
             group: [],
             relation: [],
+            scale: i => i + 1,
             layer: [],
             qualities: {
                 reflexive: true,
@@ -48,14 +50,18 @@ class App extends Component {
 
         if (!p) return;
 
-        const { input, boardSize, initialRelation } = p;
+        const { input, boardSize, initialRelation, scale, formula } = p;
 
         data1.relation = initialRelation || [];
+        data1.scale = scale || (i => i + 1);
+
+        console.log("formula ->", formula);
 
         this.setState(
-            { input, boardSize, boardSizeTransient: boardSize, data1 },
+            { input, boardSize, boardSizeTransient: boardSize, data1, formula },
             () => {
-                this.reset();
+                this.resetScale();
+                this.runFormula(formula);
             }
         );
     }
@@ -77,7 +83,7 @@ class App extends Component {
         this.loadPermutation(permutationId);
     }
 
-    reset = () => {
+    resetScale = () => {
         let { data1, data2, boardSize, input } = this.state;
 
         this.m = new SetMath(boardSize);
@@ -194,7 +200,7 @@ class App extends Component {
         }
 
         this.setState({ boardSizeTransient: size, boardSize }, () => {
-            this.reset();
+            this.resetScale();
             this.runFormula();
         });
     };
@@ -225,7 +231,7 @@ class App extends Component {
                         boardSize={boardSizeTransient}
                         data={data1}
                         formulas={formulas}
-                        reset={this.reset}
+                        reset={this.resetScale}
                         complete={this.complete}
                         sort={this.sort}
                         onSelect={this.onSelect}

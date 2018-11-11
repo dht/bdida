@@ -3,8 +3,9 @@ import clone from "clone";
 let timer_q = 1;
 
 export class SetMath {
-    constructor(boardSize) {
+    constructor(boardSize, scale) {
         this.boardSize = boardSize;
+        this.scale = scale;
     }
 
     flip(relation = []) {
@@ -358,7 +359,17 @@ export class SetMath {
     }
 
     reset(data) {
-        data.group = [...Array(this.boardSize + 1).keys()].filter(i => i !== 0);
+        const { scale } = data;
+
+        let group = [];
+
+        for (let i = 0; i < this.boardSize; i++) {
+            group[i] = scale(i);
+        }
+
+        console.log("group ->", group);
+
+        data.group = group;
 
         return data;
     }
