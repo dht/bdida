@@ -98,7 +98,6 @@ export class SetMath {
 
     and(rel1 = [], rel2 = []) {
         const after = rel1.filter(i => this.exists(rel2, i));
-        console.log("after ->", after);
         return after;
     }
 
@@ -176,9 +175,7 @@ export class SetMath {
                 result = result || transient;
 
                 if (operation) {
-                    console.log("result ->", result);
                     result = this.operation(result, transient, operation);
-                    console.log("result ->", result);
                 }
 
                 operation = matches[2];
@@ -188,8 +185,6 @@ export class SetMath {
         }
 
         console.timeEnd("calculation");
-
-        console.log("result ->", result);
 
         result = this.trim(result);
         output.relation = result;
@@ -371,8 +366,6 @@ export class SetMath {
         for (let i = 0; i < this.boardSize; i++) {
             group[i] = scale(i);
         }
-
-        console.log("group ->", group);
 
         data.group = group;
 

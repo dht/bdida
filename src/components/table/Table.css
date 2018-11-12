@@ -42,6 +42,8 @@
     justify-content: center; }
   .Table-container .td {
     cursor: pointer; }
+  .Table-container .td:hover {
+    background-color: #fafafa; }
   .Table-container .td.selected {
     background-color: #eee; }
   .Table-container .td.layer::before {
